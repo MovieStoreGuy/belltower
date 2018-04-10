@@ -15,4 +15,7 @@ type Handler interface {
 	// OnError allows the callee to defined how the Handler should
 	// handle in errors in its processing
 	OnError(handler func(error))
+
+	// Run will start listening on all the signal handler in the background
+	Run() chan bool
 }

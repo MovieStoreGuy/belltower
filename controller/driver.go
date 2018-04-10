@@ -19,10 +19,17 @@ func New() Handler {
 }
 
 func (d *driver) Register(sig os.Signal, op interface{}) error {
+	d.registered[sig] = append(d.registered[sig], op)
 	return nil
 }
 
 func (d *driver) Cancel(sig os.Signal, op interface{}) error {
+	for index, stored := range d.registerd[sig] {
+		if stored == op {
+			d.registered[sig] = append(d.registered[sig][:index], d.registered[sig][index+1:]...)
+			break
+		}
+	}
 	return nil
 }
 
